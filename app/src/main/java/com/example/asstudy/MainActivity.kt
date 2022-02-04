@@ -1,18 +1,17 @@
 package com.example.asstudy
 
-import android.graphics.Color
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Region
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toBitmap
 import com.example.asstudy.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
-import java.lang.Exception
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.concurrent.Executors
 import kotlin.concurrent.thread
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,10 +27,64 @@ class MainActivity : AppCompatActivity() {
         
         testColor()
     }
+
+    fun getBitmapRegion(bitmap: Bitmap): Region? {
+        var pixels: IntArray? = null
+        var rgn: Region? = null
+        var bMask = false
+        val height = bitmap.height
+        val width = bitmap.width
+        try {
+            pixels = IntArray(width * height)
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+            rgn = Region(0, 0, 0, 0)
+            var start = 0
+            var end = 0
+            for (j in height - 1 downTo 0) {
+                for (i in 0 until width) {
+                    if (pixels[i + width * j] != 0x00000000) {
+                        if (!bMask) {
+                            start = i
+                            end = i + 1
+                            bMask = true
+                        } else {
+                            end = i
+                        }
+                    } else {
+                        if (bMask) {
+                            rgn.op(Region(start, j, end, j + 1), Region.Op.XOR)
+                        }
+                        bMask = false
+                    }
+                }
+                if (bMask) {
+                    rgn.op(Region(start, j, end, j + 1), Region.Op.XOR)
+                }
+                bMask = false
+            }
+        } catch (e: IllegalArgumentException) {
+        } catch (e: ArrayIndexOutOfBoundsException) {
+        }
+        pixels = null
+        return rgn
+    }
     
+    @SuppressLint("ClickableViewAccessibility")
     private fun testColor() {
-        binding.img1.setColorFilter(Color.parseColor("#55ff00"))
-        binding.img2.setColorFilter(Color.parseColor("#2244aa"))
+        val mRgn = getBitmapRegion(binding.imageButton.drawable.toBitmap())
+        var i = 0
+        binding.imageButton.setOnTouchListener {_, event -> 
+            val x = event.x.toInt()
+            val y = event.y.toInt()
+
+            if (mRgn?.contains(x, y) == true) {
+                println("터치 됨$i")
+                i++
+                true
+            } else {
+                false
+            }
+        }
     }
 
     private fun testAPI() {
