@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = User("T")
-        println(user.age)
+        val user = User("T", "TEST")
+        println("${user.name} ${user.email}")
 
         binding.editText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

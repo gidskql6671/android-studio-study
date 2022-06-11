@@ -1,9 +1,10 @@
 package com.ass
 
 class User(var name: String) {
-    var age = 1
+    var email = "test@test.com"
 
-    init {
-        this.age = 2
+    constructor(name: String, email: String): this(name) {
+        this.email = email
     }
+
 }
