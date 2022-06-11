@@ -16,17 +16,11 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val nonData1 = User("t1", 10)
-        val nonData2 = User("t1", 10)
+        val someFun1: (Int) -> Unit = { println(it) }
+        someFun1(1)
 
-        val data1 = DataClass("t2", 10)
-        val data2 = DataClass("t2", 10)
-
-        println("non data class equals : ${nonData1.equals(nonData2)}")
-        println("data class equals : ${data1.equals(data2)}")
-
-        println("non data class == : ${nonData1 == nonData2}")
-        println("data class == : ${data1 == data2}")
+        val someFun2 = { println("test") }
+        someFun2()
 
         binding.editText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
