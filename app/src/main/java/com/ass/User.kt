@@ -1,10 +1,12 @@
 package com.ass
 
-class User(var name: String) {
-    var email = "test@test.com"
-
-    constructor(name: String, email: String): this(name) {
-        this.email = email
+open class Super {
+    open var someData = 10
+    fun someFun() {
+        println("$someData")
     }
+}
 
+class Sub: Super() {
+    override var someData = 20
 }
