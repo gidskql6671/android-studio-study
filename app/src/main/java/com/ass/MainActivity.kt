@@ -6,8 +6,6 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityMainBinding
 
-typealias MyInt = Int
-typealias MyFunc = (MyInt) -> Unit
 
 class MainActivity : AppCompatActivity() {
     private var mBinding : ActivityMainBinding? = null
@@ -19,11 +17,13 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val someFun1: MyFunc = { println(it) }
-        someFun1(1)
-
-        val someFun2 = { println("test") }
-        someFun2()
+        val data: String? = null
+        println("data length : ${data?.length ?: 0}")
+        try {
+            println("data length : ${data!!.length}")
+        }catch (err: NullPointerException) {
+            println("Occur NullPointerException : $err")
+        }
 
         binding.editText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
