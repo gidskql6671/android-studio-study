@@ -6,6 +6,9 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityMainBinding
 
+typealias MyInt = Int
+typealias MyFunc = (MyInt) -> Unit
+
 class MainActivity : AppCompatActivity() {
     private var mBinding : ActivityMainBinding? = null
     private val binding get() = mBinding!!
@@ -16,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val someFun1: (Int) -> Unit = { println(it) }
+        val someFun1: MyFunc = { println(it) }
         someFun1(1)
 
         val someFun2 = { println("test") }
