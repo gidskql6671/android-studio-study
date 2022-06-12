@@ -8,22 +8,12 @@ import com.ass.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    private var mBinding : ActivityMainBinding? = null
-    private val binding get() = mBinding!!
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val data: String? = null
-        println("data length : ${data?.length ?: 0}")
-        try {
-            println("data length : ${data!!.length}")
-        }catch (err: NullPointerException) {
-            println("Occur NullPointerException : $err")
-        }
 
         binding.editText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
