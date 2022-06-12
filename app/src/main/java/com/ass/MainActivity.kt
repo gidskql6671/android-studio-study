@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
-            MotionEvent.ACTION_DOWN -> Log.d("ass", "Action Down")
+            MotionEvent.ACTION_DOWN -> {
+                Log.d("ass", "x: ${event.x}, y: ${event.y}, rawX: ${event.rawX}, rawY: ${event.rawY}")
+            }
             MotionEvent.ACTION_UP -> Log.d("ass", "Action Up")
             MotionEvent.ACTION_MOVE -> {
                 // MOVE Event
