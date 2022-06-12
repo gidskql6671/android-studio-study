@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.MotionEvent
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityMainBinding
 
@@ -31,17 +31,18 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        when (event?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                Log.d("ass", "x: ${event.x}, y: ${event.y}, rawX: ${event.rawX}, rawY: ${event.rawY}")
-            }
-            MotionEvent.ACTION_UP -> Log.d("ass", "Action Up")
-            MotionEvent.ACTION_MOVE -> {
-                // MOVE Event
-            }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        when(keyCode) {
+            KeyEvent.KEYCODE_BACK -> Log.d("ass", "뒤로가기 버튼")
+            KeyEvent.KEYCODE_VOLUME_UP -> Log.d("ass", "볼륨 업 버튼")
+            KeyEvent.KEYCODE_VOLUME_DOWN -> Log.d("ass", "볼륨 다운 버튼")
         }
 
-        return super.onTouchEvent(event)
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        Log.d("ass", "뒤로가기 버튼")
+        super.onBackPressed()
     }
 }
