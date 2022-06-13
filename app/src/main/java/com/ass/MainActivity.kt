@@ -1,5 +1,6 @@
 package com.ass
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,11 @@ class MainActivity : AppCompatActivity() {
             binding.btnStart.isEnabled = true
             binding.btnStop.isEnabled = false
             it.isEnabled = false
+        }
+
+        binding.btnGotoMessengerIntro.setOnClickListener {
+            val intent = Intent(this, MessengerIntroActivity::class.java)
+            startActivity(intent)
         }
     }
 }
