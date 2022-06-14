@@ -27,5 +27,18 @@ class AlertDialogActivity : AppCompatActivity() {
                 show()
             }
         }
+
+        binding.btnSetMultiChoiceItems.setOnClickListener {
+            AlertDialog.Builder(this).run {
+                setTitle("setMultiChoiceItems test")
+                setIcon(android.R.drawable.ic_dialog_info)
+                setMultiChoiceItems(items, booleanArrayOf(true, false, true, false)) {
+                    _, p1, p2 -> Log.d("ass", "${items[p1]}이 ${if(p2) "선택되었습니다." else "선택 해제되었습니다."}")
+                }
+                setPositiveButton("닫기", null)
+
+                show()
+            }
+        }
     }
 }
