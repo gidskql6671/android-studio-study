@@ -18,7 +18,7 @@ class AlertDialogActivity : AppCompatActivity() {
         val items = arrayOf("사과", "복숭아", "수박", "딸기")
         binding.btnSetItems.setOnClickListener {
             AlertDialog.Builder(this).run {
-                setTitle("items test")
+                setTitle("setItems test")
                 setIcon(android.R.drawable.ic_dialog_info)
                 setItems(items
                 ) { _, p1 -> Log.d("ass", "선택한 과일 : ${items[p1]}") }
@@ -34,6 +34,19 @@ class AlertDialogActivity : AppCompatActivity() {
                 setIcon(android.R.drawable.ic_dialog_info)
                 setMultiChoiceItems(items, booleanArrayOf(true, false, true, false)) {
                     _, p1, p2 -> Log.d("ass", "${items[p1]}이 ${if(p2) "선택되었습니다." else "선택 해제되었습니다."}")
+                }
+                setPositiveButton("닫기", null)
+
+                show()
+            }
+        }
+
+        binding.btnSetSingleChoiceItems.setOnClickListener {
+            AlertDialog.Builder(this).run {
+                setTitle("setSingleChoiceItems test")
+                setIcon(android.R.drawable.ic_dialog_info)
+                setSingleChoiceItems(items, 1) {
+                        _, p1 -> Log.d("ass", "${items[p1]}이 선택되었습니다")
                 }
                 setPositiveButton("닫기", null)
 
