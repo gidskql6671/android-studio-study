@@ -49,5 +49,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MessengerIntroActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnGotoAlert.setOnClickListener {
+            val intent = Intent(this, AlertDialogActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
