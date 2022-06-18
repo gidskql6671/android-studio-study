@@ -2,13 +2,16 @@ package com.ass
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 import com.ass.databinding.ActivityAlarmBinding
 
 class AlarmActivity : AppCompatActivity() {
@@ -95,6 +98,32 @@ class AlarmActivity : AppCompatActivity() {
         builder.setWhen(System.currentTimeMillis())
         builder.setContentTitle("Content Title")
         builder.setContentText("Content Message")
+
+        // 알림 객체에 액티비티 실행 정보 등록
+        val intent = Intent(this, AlarmActivity::class.java)
+        val pendingIntent =
+            PendingIntent.getActivity(this, 10, intent,
+                PendingIntent.FLAG_IMMUTABLE)
+        builder.setContentIntent(pendingIntent)
+
+        // 액션 등록
+        val KEY_TEXT_REPLY = "key_text_reply"
+        val replyLabel = "답장"
+        val remoteInput = RemoteInput.Builder(KEY_TEXT_REPLY).run {
+            setLabel(replyLabel)
+            build()
+        }
+
+        val replyIntent = Intent(this, ReplyReceiver::class.java)
+        val replyPendingIntent = PendingIntent.getBroadcast(this, 30, replyIntent,
+            PendingIntent.FLAG_MUTABLE)
+        builder.addAction(
+            NotificationCompat.Action.Builder(
+                R.drawable.send,
+                "답장",
+                replyPendingIntent
+            ).addRemoteInput(remoteInput).build()
+        )
 
         // 알림 취소 막기
 //        builder.setAutoCancel(false)
