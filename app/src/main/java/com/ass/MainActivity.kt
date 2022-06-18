@@ -28,5 +28,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, StopwatchActivity::class.java)
             startActivity(intent)
         }
+
+        binding.navigateAlarm.setOnClickListener {
+            val intent = Intent(this, AlarmActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
