@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityAlertDialogBinding
+import com.ass.databinding.DialogInputBinding
 
 class AlertDialogActivity : AppCompatActivity() {
     private val binding by lazy { ActivityAlertDialogBinding.inflate(layoutInflater) }
@@ -53,6 +54,16 @@ class AlertDialogActivity : AppCompatActivity() {
 
                 show()
             }.setCanceledOnTouchOutside(false)
+        }
+
+        binding.btnCustomDialog.setOnClickListener {
+            val dialogBinding = DialogInputBinding.inflate(layoutInflater)
+            AlertDialog.Builder(this).run {
+                setTitle("Input")
+                setView(dialogBinding.root)
+                setPositiveButton("닫기", null)
+                show()
+            }
         }
     }
 }
