@@ -49,9 +49,10 @@ class AlertDialogActivity : AppCompatActivity() {
                         _, p1 -> Log.d("ass", "${items[p1]}이 선택되었습니다")
                 }
                 setPositiveButton("닫기", null)
+                setCancelable(false)
 
                 show()
-            }
+            }.setCanceledOnTouchOutside(false)
         }
     }
 }
