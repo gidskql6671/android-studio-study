@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         binding.navigateMessengerIntro.setOnClickListener {
             val intent = Intent(this, MessengerIntroActivity::class.java)
