@@ -2,9 +2,7 @@ package com.ass
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityMainBinding
 
@@ -39,22 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val groupId = 0
-        menu?.add(groupId, 0, 0, "menu1")
-        menu?.add(groupId, 1, 0, "menu2")
-
+        menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId){
-        0 -> {
-            Log.d("ass", "menu1 click")
-            true
-        }
-        1 -> {
-            Log.d("ass", "menu2 click")
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
     }
 }
