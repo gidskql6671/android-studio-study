@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import com.ass.databinding.ActivityAlarmBinding
+import kotlin.concurrent.thread
 
 class AlarmActivity : AppCompatActivity() {
     private val binding by lazy { ActivityAlarmBinding.inflate(layoutInflater) }
@@ -53,6 +54,10 @@ class AlarmActivity : AppCompatActivity() {
 
         binding.btn3.setOnClickListener {
             alarmTest()
+        }
+
+        binding.btn4.setOnClickListener {
+            progressAlarmTest()
         }
     }
 
@@ -135,5 +140,58 @@ class AlarmActivity : AppCompatActivity() {
         // 알림 취소
 //        manager.cancel(11)
 
+    }
+
+    private fun progressAlarmTest() {
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val builder: NotificationCompat.Builder
+
+        val channelID = "one-channel"
+        val channelName = "My Channel One"
+        val channel = NotificationChannel(
+            channelID,
+            channelName,
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+
+        // 채널에 다양한 정보 설정
+        channel.description = "My Channel One Description"
+        channel.setShowBadge(true)
+        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_ALARM)
+            .build()
+        channel.setSound(uri, audioAttributes)
+        channel.enableLights(true)
+        channel.lightColor = Color.RED
+        channel.enableVibration(true)
+        channel.vibrationPattern = longArrayOf(100, 200, 100, 200)
+
+        // 채널을 NotifiactionManager에 등록
+        manager.createNotificationChannel(channel)
+
+        // 채널을 이용해 빌더 생성
+        builder = NotificationCompat.Builder(this, channelID)
+
+        builder.setSmallIcon(android.R.drawable.ic_notification_overlay)
+        builder.setWhen(System.currentTimeMillis())
+        builder.setContentTitle("Progress Bar")
+        builder.setContentText("Progress")
+
+        builder.setAutoCancel(false)
+        builder.setOngoing(true)
+
+        builder.setProgress(100, 0, false)
+        manager.notify(12, builder.build())
+
+        thread {
+            for (i in 1..25) {
+                builder.setProgress(100, i * 4, false)
+                manager.notify(12, builder.build())
+                SystemClock.sleep(100)
+            }
+            manager.cancel(12)
+        }
     }
 }
