@@ -2,7 +2,6 @@ package com.ass
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.ass.databinding.ActivityMainBinding
 
@@ -14,7 +13,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
 
         binding.navigateMessengerIntro.setOnClickListener {
             val intent = Intent(this, MessengerIntroActivity::class.java)
@@ -35,10 +33,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AlarmActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 }
